@@ -33,15 +33,15 @@ var snapshotSyncTask = async () => {
   // A-1 get Snapshot data
   console.log('retriving latest snapshot data . . .')
   var snapshotData = await getLatestSnapshot()
-  console.log('snapshot data received √')
+  console.log('√ snapshot data received')
 //   console.log(snapshotData)
   // A-2
   console.log('Inserting snapshot into DB . . . ')
   await snapshotDBSave(snapshotData, dbConn)
-  console.log('DB Insert completed √')
+  console.log('√ DB Insert completed!')
 
   dbConn.end()
-  console.log('DB connection ended!')
+  console.log('√ DB connection ended!')
 }
 
 /**
@@ -95,7 +95,7 @@ var snapshotDBSave = async (snapshotData, dbConn) => {
   // prepare key arrays - add createdAt
   let keysArray = Object.keys(snapshotData[0])
   keysArray.push('createdAt')
-  console.log(keysArray.join(', '))
+//   console.log(keysArray.join(', '))
 
 //   prepare value arrays
   for (var i = 0; i < snapshotData.length; i++) {
@@ -108,10 +108,8 @@ var snapshotDBSave = async (snapshotData, dbConn) => {
 
   // Insert into DB
   try {
-      // keysArray.join(',') [keysArray.join(', '), formedData]
-    console.log(dbConn.escape('name, rank'))
     let output = await dbConn.query('INSERT INTO `crypto_market_snapshot` (' + keysArray.join(',') + ') VALUES ?', [formedData])
-    console.log(output)
+    // console.log(output)
   } catch (e) {
     console.log(e)
   }
@@ -123,6 +121,6 @@ var snapshotDBSave = async (snapshotData, dbConn) => {
  */
 
 var rule = new schedule.RecurrenceRule()
-rule = '0 */30 * * * *' // production: 30 mins
+rule = '0 */20 * * * *' // production: 20 mins
 // rule = '*/20 * * * * *' // development: 20s
 var snapshotSyncJob = schedule.scheduleJob(rule, snapshotSyncTask)
