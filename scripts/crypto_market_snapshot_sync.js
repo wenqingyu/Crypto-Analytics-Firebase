@@ -18,11 +18,13 @@ var schedule = require('node-schedule')
 var request = require('async-request')
 
 console.log('Crypto Market Snapshot Sync Task Started! ')
+
 /**
  * Main Task Function A: Crypto market data snapshot task pipeline
  */
 var snapshotSyncTask = async () => {
   console.log('Main Task Function: Crypto market data snapshot task pipeline start ...')
+  console.log('time: ', new Date().toTimeString())
   // A-0: Check DB Connection
   console.log(dbConfig)
   const dbConn = await mysql.createConnection(dbConfig)
@@ -121,6 +123,6 @@ var snapshotDBSave = async (snapshotData, dbConn) => {
  */
 
 var rule = new schedule.RecurrenceRule()
-rule = '* */30 * * * *' // production: 30 mins
+rule = '0 */30 * * * *' // production: 30 mins
 // rule = '*/20 * * * * *' // development: 20s
 var snapshotSyncJob = schedule.scheduleJob(rule, snapshotSyncTask)
