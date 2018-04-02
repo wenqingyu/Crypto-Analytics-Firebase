@@ -62,4 +62,4 @@ typings/
 
 
 ### configuration
-config/default.json
+scripts/config/default.json
