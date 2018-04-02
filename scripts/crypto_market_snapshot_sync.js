@@ -17,6 +17,7 @@ var mysql = require('mysql2/promise')
 var schedule = require('node-schedule')
 var request = require('async-request')
 
+console.log('Crypto Market Snapshot Sync Task Started! ')
 /**
  * Main Task Function A: Crypto market data snapshot task pipeline
  */
