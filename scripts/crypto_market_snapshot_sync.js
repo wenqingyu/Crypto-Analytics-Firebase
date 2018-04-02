@@ -120,6 +120,6 @@ var snapshotDBSave = async (snapshotData, dbConn) => {
  */
 
 var rule = new schedule.RecurrenceRule()
-rule = '* * */1 * * *' // production: 1 hour
-// rule = '*/20 * * * * *' // development: 20s
+// rule = '* * */1 * * *' // production: 1 hour
+rule = '*/20 * * * * *' // development: 20s
 var snapshotSyncJob = schedule.scheduleJob(rule, snapshotSyncTask)
