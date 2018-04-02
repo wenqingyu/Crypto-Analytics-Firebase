@@ -13,18 +13,9 @@
 var config = require('config')
 var dbConfig = config.get('DBConfig')
 var mysql = require('mysql2/promise')
-const bluebird = require('bluebird')
-var InsertQuery = require('mysql-insert-multiple') // https://www.npmjs.com/package/mysql-insert-multiple
 
 var schedule = require('node-schedule')
 var request = require('async-request')
-
-// const dbConn = mysql.createConnection(dbConfig)
-// // console.log(dbConn)
-// dbConn.execute('SELECT * FROM `cryto-market-snapshot`', [], (err, result, fields) => {
-//   console.log(result)
-//   console.log(fields)
-// })
 
 /**
  * Main Task Function A: Crypto market data snapshot task pipeline
@@ -41,9 +32,9 @@ var snapshotSyncTask = async () => {
   var snapshotData = await getLatestSnapshot()
   console.log('snapshot data received √')
 //   console.log(snapshotData)
-// A-2
+  // A-2
   console.log('Inserting snapshot into DB . . . ')
-  var result = await snapshotDBSave(snapshotData, dbConn)
+  await snapshotDBSave(snapshotData, dbConn)
   console.log('DB Insert completed √')
 
   dbConn.end()
@@ -128,7 +119,7 @@ var snapshotDBSave = async (snapshotData, dbConn) => {
  * rule: every 2 hours
  */
 
-// rule = '* * */1 * * *'
 var rule = new schedule.RecurrenceRule()
-// rule = '*/20 * * * * *'
+rule = '* * */1 * * *' // production: 1 hour
+// rule = '*/20 * * * * *' // development: 20s
 var snapshotSyncJob = schedule.scheduleJob(rule, snapshotSyncTask)
