@@ -1,8 +1,8 @@
 {
     "DBConfig": {
-        "host": "rm-bp127cjxb573ytp5k.mysql.rds.aliyuncs.com",
-        "user": "wenqing_aliyun",
-        "password": "123456isU",
-        "database": "rx9y27mt2h"
+        "host": "",
+        "user": "",
+        "password": "",
+        "database": ""
     }
 }
