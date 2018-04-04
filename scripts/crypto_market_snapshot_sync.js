@@ -39,7 +39,6 @@ var snapshotSyncTask = async () => {
   console.log('Inserting snapshot into DB . . . ')
   await snapshotDBSave(snapshotData, dbConn)
   console.log('√ DB Insert completed!')
-
   dbConn.end()
   console.log('√ DB connection ended!')
 }
@@ -101,7 +100,7 @@ var snapshotDBSave = async (snapshotData, dbConn) => {
   for (var i = 0; i < snapshotData.length; i++) {
 //   for (var i = 0; i < 1; i++) {
     let row = Object.values(snapshotData[i])
-    row.push(new Date().toTimeString())
+    row.push(new Date().toLocaleString())
     formedData.push(row)
   }
 //   console.log(formedData)
@@ -122,5 +121,5 @@ var snapshotDBSave = async (snapshotData, dbConn) => {
 
 var rule = new schedule.RecurrenceRule()
 rule = '0 */20 * * * *' // production: 20 mins
-// rule = '*/20 * * * * *' // development: 20s
+// rule = '*/10 * * * * *' // development: 20s
 var snapshotSyncJob = schedule.scheduleJob(rule, snapshotSyncTask)
