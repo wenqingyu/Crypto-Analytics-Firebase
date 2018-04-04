@@ -107,7 +107,7 @@ var snapshotDBSave = async (snapshotData, dbConn) => {
 
   // Insert into DB
   try {
-    // let output = await dbConn.query('INSERT INTO `crypto_market_snapshot` (' + keysArray.join(',') + ') VALUES ?', [formedData])
+    let output = await dbConn.query('INSERT INTO `crypto_market_snapshot` (' + keysArray.join(',') + ') VALUES ?', [formedData])
     // console.log(output)
   } catch (e) {
     console.log(e)
