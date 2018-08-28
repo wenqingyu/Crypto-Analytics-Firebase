@@ -33,7 +33,7 @@ bower_components
 build/Release
 
 # Dependency directories
-./script/node_modules/
+./scripts/node_modules/
 jspm_packages/
 
 # TypeScript v1 declaration files
@@ -62,4 +62,4 @@ typings/
 
 
 ### configuration
-./script/config/default.json
+./scripts/config/default.json
