@@ -64,3 +64,10 @@ typings/
 ### configuration
 ./scripts/config/default.json
 ./scripts/node_modules
+
+
+### momy
+./bitportal_data_analytic/momy/node_modules
+./bitportal_data_analytic/momy/coverage
+./bitportal_data_analytic/momy/*.log
+./bitportal_data_analytic/momy/package-lock.json
