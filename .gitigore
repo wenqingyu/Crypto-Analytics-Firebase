@@ -64,7 +64,7 @@ typings/
 ### configuration
 ./scripts/config/default.json
 ./scripts/node_modules
-
+./scripts/package-lock.json
 
 ### momy
 ./bitportal_data_analytic/momy/node_modules
