@@ -63,3 +63,4 @@ typings/
 
 ### configuration
 ./scripts/config/default.json
+./scripts/node_modules
