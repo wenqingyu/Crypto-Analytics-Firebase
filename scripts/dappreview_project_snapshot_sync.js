@@ -35,7 +35,7 @@ var snapshotSyncTask = async () => {
   console.log('retriving latest snapshot data . . .')
   var snapshotData = await getLatestSnapshot() // TODO: update DappReview listed datd
   console.log('√ snapshot data received')
-  // console.log(snapshotData)
+  console.log(snapshotData)
   // A-2
   console.log('Inserting snapshot into DB . . . ')
   await snapshotDBSave(snapshotData, dbConn) // TODO: change DappReview projects insert schema
@@ -50,7 +50,7 @@ var snapshotSyncTask = async () => {
 var getLatestSnapshot = async () => {
   console.log('start query DappReview list project Data')
   try {
-    let url = 'https://dapp.review/api/dapp/dapps/?search=&page=1&page_size=60&is_support_chinese=false&ordering=-dau_last_day&new=false&block_chain=1'
+    let url = 'https://dapp.review/api/dapp/dapps/?search=&page=1&page_size=60&is_support_chinese=false&ordering=-dau_last_day&new=false&block_chain=1&lang=en-US'
     let result = await getLatestSnapshotRecursive(url)
     // console.log(result)
     return result
@@ -65,7 +65,17 @@ var getLatestSnapshot = async () => {
 var getLatestSnapshotRecursive = async (url) => {
   console.log('start query DappReview list - Recursive type')
   try {
-    let response = await request(url)
+    let response = await request(url, {
+      headers: {
+        'authority': 'dapp.review',
+        'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/68.0.3440.106 Safari/537.36',
+        'referer': 'https://dapp.review/explore',
+        // 'X-CSRFTOKEN': 'XSuFfqwUyLwaorejLEvIXt2DlLW5x9jZUwlxLe4t7JWrkLuHSyD2U99O8pT0DOhc',
+        'cookie': '__cfduid=db447d755afd3ede62b0047f6187d46e41533287114; _ga=GA1.2.1560861112.1533287134; _gid=GA1.2.118850291.1536896320; sessionid=iwei3krklsp8zlbprvpbjs7r72didzpe; csrftoken=2lv0EnLVbmenkGX37UOmQdzgdZ7hGGeAVlJVcg35AvzVjyeutJbMFNfSmYr2I9Nm; lang=en-us',
+        'x-csrftoken': '2lv0EnLVbmenkGX37UOmQdzgdZ7hGGeAVlJVcg35AvzVjyeutJbMFNfSmYr2I9Nm'
+      }
+    })
+
     let result = []
 
     // success
@@ -73,6 +83,7 @@ var getLatestSnapshotRecursive = async (url) => {
       let output = JSON.parse(response.body)
       console.log('Total Project ', output.count, 'next: ', output.next)
       // push current result after
+      console.log(response)
       // console.log(output.results)
       result = output.results
 
@@ -195,4 +206,4 @@ rule = '0 0 */5 * * *' // production: every 5 hours
 var snapshotSyncJob = schedule.scheduleJob(rule, snapshotSyncTask)
 
 // TEST_CODE
-// snapshotSyncTask() // TEST_CODE
+snapshotSyncTask() // TEST_CODE
